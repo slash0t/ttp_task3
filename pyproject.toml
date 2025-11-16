@@ -1,0 +1,20 @@
+[project]
+name = "ttp-task3"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "slash0t",email = "minenion2@gmail.com"}
+]
+requires-python = ">=3.13"
+dependencies = [
+    "selenium (>=4.38.0,<5.0.0)",
+    "pytest (>=9.0.1,<10.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
