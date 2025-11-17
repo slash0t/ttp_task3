@@ -37,7 +37,6 @@ def test_news_title_validation_short_length(driver, input_text):
         EC.visibility_of_element_located(TITLE_INPUT)
     )
 
-    wait.until(EC.visibility_of_element_located(TITLE_INPUT))
     title_input.clear()
     title_input.send_keys(input_text)
 
