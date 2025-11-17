@@ -11,21 +11,21 @@ def test_region_switch_changes_city_label(driver):
 
     CURRENT_REGION = (
         By.CSS_SELECTOR,
-        "div.selected-city a span"
+        "div.select-city:nth-child(1) > div:nth-child(1) > a:nth-child(1) > span:nth-child(1)"
     )
 
     REGION_LIST_OPEN = (
         By.CSS_SELECTOR,
-        "div.selected-city a"
+        "div.select-city:nth-child(1) > div:nth-child(1)"
     )
 
     REGION_LIST_ITEMS = (
         By.CSS_SELECTOR,
-        "div.select-city ul.dropdown-menu a"
+        "div.select-city:nth-child(1) > ul:nth-child(2) > li"
     )
 
     current_region_el = wait.until(
-        EC.presence_of_element_located(CURRENT_REGION)
+        EC.visibility_of_element_located(CURRENT_REGION)
     )
     current_region_name = current_region_el.text.strip()
     current_region_name = current_region_name.split(" ")[-1]
@@ -61,12 +61,10 @@ def test_region_switch_changes_city_label(driver):
     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", new_region_el)
     new_region_el.click()
 
-    def region_label_updated(driver_):
-        el = driver_.find_element(*CURRENT_REGION)
-        return el.text.strip() == new_region_name
+    wait.until(
+        EC.visibility_of_element_located(CURRENT_REGION)
+    )
 
-    assert wait.until(region_label_updated)
-
-    final_region_text = driver.find_element(*CURRENT_REGION).text.strip()
+    final_region_text = driver.find_element(*CURRENT_REGION).text.strip().split(" ")[-1]
     assert final_region_text == new_region_name
     assert final_region_text != current_region_name
