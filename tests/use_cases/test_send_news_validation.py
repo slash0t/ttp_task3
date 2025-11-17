@@ -9,11 +9,9 @@ from tests.misc import clear_page
 
 URL_SUBMIT_NEWS = "https://moe-online.ru/frontnews/add"
 
-INVALID_TITLE_SHORT = "abc"
-
 @pytest.mark.parametrize(
     "input_text",
-    ["a"], # ["a", "ab", "abc", "abcd"],
+    ["a", "ab", "abc", "abcd"],
 )
 def test_news_title_validation_short_length(driver, input_text):
     driver.get(URL_SUBMIT_NEWS)
@@ -41,7 +39,7 @@ def test_news_title_validation_short_length(driver, input_text):
 
     wait.until(EC.visibility_of_element_located(TITLE_INPUT))
     title_input.clear()
-    title_input.send_keys(INVALID_TITLE_SHORT)
+    title_input.send_keys(input_text)
 
     submit_button = wait.until(
         EC.element_to_be_clickable(SUBMIT_BUTTON)
