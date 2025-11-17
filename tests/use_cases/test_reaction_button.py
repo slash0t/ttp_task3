@@ -37,6 +37,7 @@ def test_reaction_button_toggles_counter(driver):
     initial_count = get_reaction_count(driver, REACTION_COUNTER)
 
     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", reaction_button)
+    wait.until(EC.visibility_of_element_located(REACTION_BUTTON))
     reaction_button.click()
 
     def counter_is_incremented(driver_):

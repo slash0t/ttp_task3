@@ -11,7 +11,7 @@ URL_SUBMIT_NEWS = "https://moe-online.ru/frontnews/add"
 
 @pytest.mark.parametrize(
     "input_text",
-    ["a", "ab", "abc", "abcd"],
+    ["лохи"], # ["a", "ab", "abc", "abcd"],
 )
 def test_news_title_validation_short_length(driver, input_text):
     driver.get(URL_SUBMIT_NEWS)

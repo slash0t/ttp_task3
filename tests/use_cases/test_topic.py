@@ -3,7 +3,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
-from tests.misc import clear_page
 
 URL_MAIN = "https://moe-online.ru/news/"
 
@@ -12,14 +11,13 @@ URL_MAIN = "https://moe-online.ru/news/"
     "url, topic_name",
     [
         (URL_MAIN + "tests-poll", "Тесты"),
-        # (URL_MAIN + "shou-biznes", "Шоу-бизнес"),
-        # (URL_MAIN + "people", "Люди"),
+        (URL_MAIN + "shou-biznes", "Шоу-бизнес"),
+        (URL_MAIN + "people", "Люди"),
     ],
 )
 def test_topic_news_relevance(driver, url, topic_name):
     driver.get(url)
     wait = WebDriverWait(driver, 15)
-    clear_page(driver)
 
     NEWS_LINKS = (
         By.CSS_SELECTOR,
@@ -28,13 +26,15 @@ def test_topic_news_relevance(driver, url, topic_name):
 
     TOPIC_TEXT = (
         By.CSS_SELECTOR,
-        "a.rubrika",
+        ".material-head-rubric > a:nth-child(1)",
     )
 
-    driver.execute_script("window.scrollBy(0, 300);")
-    news_link = driver.find_elements(NEWS_LINKS)
+    news_link = wait.until(
+        EC.presence_of_all_elements_located(NEWS_LINKS)
+    )
+    # news_link[0].location_once_scrolled_into_view
+    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", news_link[0])
     news_link[0].click()
 
-    wait.until(EC.visibility_of_element_located(TOPIC_TEXT))
-    breadcrumbs_elements = driver.find_element(TOPIC_TEXT)
+    breadcrumbs_elements = wait.until(EC.presence_of_element_located(TOPIC_TEXT))
     assert breadcrumbs_elements.text == topic_name

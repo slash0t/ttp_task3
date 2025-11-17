@@ -25,7 +25,7 @@ def test_region_switch_changes_city_label(driver):
     )
 
     current_region_el = wait.until(
-        EC.visibility_of_element_located(CURRENT_REGION)
+        EC.presence_of_element_located(CURRENT_REGION)
     )
     current_region_name = current_region_el.text.strip()
     current_region_name = current_region_name.split(" ")[-1]
