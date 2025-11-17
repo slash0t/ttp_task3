@@ -39,9 +39,13 @@ def test_search_returns_non_empty_result_list(driver):
     wait.until(EC.visibility_of_element_located(SEARCH_BUTTON))
     search_button.click()
 
+    wait.until(
+        EC.presence_of_all_elements_located(SEARCH_RESULT_ITEMS)
+    )
+
     def search_result_list(driver_):
         return driver_.find_element(*SEARCH_RESULT_ITEMS)
 
-    result = wait.until(search_result_list )
+    result = wait.until(search_result_list)
 
     assert result is not None
