@@ -32,9 +32,11 @@ def test_search_returns_non_empty_result_list(driver):
         EC.element_to_be_clickable(SEARCH_BUTTON)
     )
 
+    wait.until(EC.visibility_of_element_located(SEARCH_INPUT))
     search_input.clear()
     search_input.send_keys(SEARCH_QUERY)
 
+    wait.until(EC.visibility_of_element_located(SEARCH_BUTTON))
     search_button.click()
 
     def search_result_list(driver_):
